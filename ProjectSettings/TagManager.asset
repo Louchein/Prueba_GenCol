@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enter_Inventory
+  - Trash_Can
+  - Plate
   layers:
   - Default
   - TransparentFX
