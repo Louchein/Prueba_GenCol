@@ -5,7 +5,7 @@ using UnityEngine;
 public class LevitateInPlace : MonoBehaviour {
     private Vector3 initialPosition;
     private float randomOffset;
-    private float offsetRange = 3f;
+    [SerializeField] private float offsetRange = 3f;
 
     // Start is called before the first frame update
     void Start() {

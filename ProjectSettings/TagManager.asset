@@ -7,6 +7,7 @@ TagManager:
   - Enter_Inventory
   - Trash_Can
   - Plate
+  - Inventory_Button
   layers:
   - Default
   - TransparentFX

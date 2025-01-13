@@ -4,6 +4,7 @@ public class InteractableController : MonoBehaviour {
     private string EnterInventoryTag = "Enter_Inventory"; // Use this for tag selection
     private string TrashCanTag = "Trash_Can"; // Use this for tag selection
     private string PlateTag = "Plate"; // Use this for tag selection
+    private string InventoryBtnTag = "Inventory_Button"; // Use this for tag selection
 
     public bool HandleItemDrop(GameObject item) {
         // Validate that the item has an ItemController
@@ -13,6 +14,18 @@ public class InteractableController : MonoBehaviour {
             if (gameObject.CompareTag(EnterInventoryTag)) {
                 Debug.Log($"Item {itemController.item.itemName} dropped on specific interactable {gameObject.name}.");
 
+                // Sent item to Halo tube
+
+                // Add the item to the inventory
+                //InventoryManager.Instance.Add(itemController.item);
+
+                // Destroy the dropped item GameObject
+                //Destroy(item);
+                return true;
+
+            } /*else if (gameObject.CompareTag(InventoryBtnTag)) {
+                Debug.Log($"Item {itemController.item.itemName} dropped on specific interactable {gameObject.name}.");
+
                 // Add the item to the inventory
                 InventoryManager.Instance.Add(itemController.item);
 
@@ -20,7 +33,7 @@ public class InteractableController : MonoBehaviour {
                 Destroy(item);
                 return true;
 
-            } else if (gameObject.CompareTag(TrashCanTag)) {
+            } */else if (gameObject.CompareTag(TrashCanTag)) {
                 Debug.Log($"Item {itemController.item.itemName} dropped on specific interactable {gameObject.name}.");
 
                 // Destroy the dropped item GameObject
@@ -37,7 +50,7 @@ public class InteractableController : MonoBehaviour {
                 return true;
 
             } else {
-                Debug.Log($"Item {itemController.item.itemName} dropped on {gameObject.name}, but no special action is taken.");
+                Debug.Log($"Item {itemController.item.itemName} almost dropped on {gameObject.name}, but no special action is taken.");
                 return false;
             }
         } else {

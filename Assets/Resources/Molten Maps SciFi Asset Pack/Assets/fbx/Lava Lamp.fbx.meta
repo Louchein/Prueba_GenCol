@@ -3,7 +3,13 @@ guid: 60d8f6fcbf743c74fb50983fb0e1ff93
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Atlas Holo
+    second: {fileID: 1485283925080906071, guid: 1cd899839378cfd4d91f2141d49b18cd,
+      type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
