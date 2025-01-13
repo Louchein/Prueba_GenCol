@@ -4958,6 +4958,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8007055461323455731}
   - component: {fileID: 6870694768595128547}
+  - component: {fileID: -3577789187013862021}
+  - component: {fileID: 8878448091000411489}
   m_Layer: 0
   m_Name: EsporasSystem
   m_TagString: Untagged
@@ -4995,6 +4997,42 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: fa6db76e2f00bc84085e6991276e1a37, type: 2}
+--- !u!136 &-3577789187013862021
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4179942173869784758}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.08
+  m_Height: 0.2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.01, z: 0}
+--- !u!114 &8878448091000411489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4179942173869784758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25c1595dcc5f61f4a8c1c56c74d8ed5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Item: {fileID: 11400000, guid: fa6db76e2f00bc84085e6991276e1a37, type: 2}
 --- !u!1 &6950354883856803978
 GameObject:
   m_ObjectHideFlags: 0
