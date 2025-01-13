@@ -5,7 +5,7 @@ using UnityEngine;
 public class RotateInPlace : MonoBehaviour {
     private Vector3 initialRotation;
     private float randomOffset;
-    [SerializeField] private float multiplier = 3f;
+    [SerializeField] private float multiplier = 0.2f;
 
     // Start is called before the first frame update
     void Start() {
