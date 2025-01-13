@@ -16,3 +16,4 @@ MonoBehaviour:
   itemName: "Tent\xE1culo Asado"
   value: 0
   icon: {fileID: 21300000, guid: 2a4b5d8cb39c9b04fb94263c035ac1dc, type: 3}
+  prefab: {fileID: 5762221490345491743, guid: 65fd465ec966bc04a9bc5f4940c36ccd, type: 3}

@@ -16,3 +16,4 @@ MonoBehaviour:
   itemName: Esporas
   value: 0
   icon: {fileID: 21300000, guid: 458f7798598a5f6448984fde2f2eaad9, type: 3}
+  prefab: {fileID: 4179942173869784758, guid: 3e0186722691e2148bf39a3bf237ae4d, type: 3}

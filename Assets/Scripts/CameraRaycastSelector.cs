@@ -21,6 +21,12 @@ public class CameraRaycastSelector : MonoBehaviour {
         // Perform the raycast
         if (Physics.Raycast(ray, out hit, rayDistance, interactableLayer)) {
             HandleSelection(hit);
+
+            // Handle item dropping when clicking on an interactable
+            if (Input.GetMouseButtonDown(0)) {
+                // Left mouse button
+                DropItemOnInteractable(hit.collider.gameObject);
+            }
         } else {
             ClearSelection();
         }
@@ -52,6 +58,29 @@ public class CameraRaycastSelector : MonoBehaviour {
         if (selectedRenderer != null) {
             selectedRenderer.material.color = originalColor;
             selectedRenderer = null;
+        }
+    }
+
+    private void DropItemOnInteractable(GameObject interactable) {
+        // Check if there is an item at the HandlingPoint
+        Transform handlingPoint = InventoryManager.Instance.HandlingPoint; // Use the HandlingPoint from InventoryManager
+        if (handlingPoint.childCount > 0) {
+            GameObject itemObject = handlingPoint.GetChild(0).gameObject;
+
+            // Check if the interactable has an InteractableController
+            InteractableController interactableController = interactable.GetComponent<InteractableController>();
+            if (interactableController != null) {
+                // Drop the item onto the interactable
+                if (interactableController.HandleItemDrop(itemObject)) {
+                    // Optionally clear the HandlingPoint
+                    itemObject.transform.SetParent(null);
+                    Debug.Log($"Cleaned/Dropped {itemObject.name} on {interactable.name}");
+                }
+            } else {
+                Debug.LogWarning("This interactable cannot handle item drops.");
+            }
+        } else {
+            Debug.LogWarning("No item to drop!");
         }
     }
 }

@@ -16,3 +16,4 @@ MonoBehaviour:
   itemName: Pan Base
   value: 0
   icon: {fileID: 21300000, guid: b9d2cbbb0c5bf4b4b9d55808c4f31627, type: 3}
+  prefab: {fileID: 9011400692662756937, guid: 22b550bad95401b49bfbe4dc99d2b199, type: 3}

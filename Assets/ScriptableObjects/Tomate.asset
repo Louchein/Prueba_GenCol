@@ -16,3 +16,4 @@ MonoBehaviour:
   itemName: Tomate
   value: 0
   icon: {fileID: 21300000, guid: b5fbdf1da5551f94fbf7f767c7d9ad0c, type: 3}
+  prefab: {fileID: 1180959410567829762, guid: 2a1d2c12706667c4ea6b88122a6f4505, type: 3}
