@@ -8,6 +8,7 @@ TagManager:
   - Trash_Can
   - Plate
   - Inventory_Button
+  - Bell
   layers:
   - Default
   - TransparentFX

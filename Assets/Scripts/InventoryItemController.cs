@@ -25,6 +25,8 @@ public class InventoryItemController : MonoBehaviour {
 
     public void OnItemClicked() {
         if (itemPrefab != null && spawnPoint != null) {
+            AudioManager.Instance.PlaySFX("tin_tap");
+
             // Instanciar el objeto en el punto definido
             Quaternion spawnRot = Quaternion.Euler(0f, 0f, Random.Range(-3*spawnRotationRange, -spawnRotationRange));
             GameObject spawnedItem = Instantiate(itemPrefab, spawnPoint.position, spawnRot);

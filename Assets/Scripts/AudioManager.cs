@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour {
@@ -17,8 +18,8 @@ public class AudioManager : MonoBehaviour {
 
     [Header("Settings")]
     public bool loopMusic = true; // ¿Debería la música repetirse automáticamente?
-    public float musicVolume = 0.5f; // Volumen de la música
-    public float sfxVolume = 1.0f;   // Volumen de los efectos de sonido
+    public float musicVolume = 0.05f; // Volumen de la música
+    public float sfxVolume = 0.4f;   // Volumen de los efectos de sonido
 
     private void Awake() {
         // Implementar Singleton

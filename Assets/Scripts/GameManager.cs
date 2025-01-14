@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
     [Header("Inventory Initialization")]
-    public List<ItemSO> itemsToInitialize; // Lista de los tipos de ítems que deben ser agregados al inventario al inicio
+    public List<ItemSO> itemsToInitialize;
+
+    [Header("Inventory Check")]
+    public float checkInterval = 5f; // Tiempo entre chequeos
+    public int minItems = 3; // Mínimo de ítems requeridos en el inventario
 
     private void Start() {
         InitializeInventory();
+        StartCoroutine(CheckAndRefillInventory());
     }
 
     void InitializeInventory() {
@@ -15,15 +20,23 @@ public class GameManager : MonoBehaviour {
             Debug.LogWarning("No items specified for inventory initialization.");
             return;
         }
-
         foreach (ItemSO item in itemsToInitialize) {
-            if (item != null) {
-                // Agrega el ítem al inventario usando el método `Add`
-                InventoryManager.Instance.Add(item);
-                Debug.Log($"Added {item.itemName} to the inventory.");
-            } else {
-                Debug.LogWarning("One of the items in the initialization list is null.");
+            if (item != null) InventoryManager.Instance.Add(item);
+        }
+    }
+
+    IEnumerator CheckAndRefillInventory() {
+        while (true) {
+            yield return new WaitForSeconds(checkInterval);
+            //if (InventoryManager.Instance.ItemCount < minItems) {
+            if (InventoryManager.Instance.Items.Count < minItems) {
+                var newItem = GenerateRandomItem();
+                InventoryManager.Instance.Add(newItem);
             }
         }
+    }
+
+    ItemSO GenerateRandomItem() {
+        return itemsToInitialize[Random.Range(0, itemsToInitialize.Count)];
     }
 }

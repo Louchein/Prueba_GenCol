@@ -37,7 +37,7 @@ public class PlateController : MonoBehaviour {
         int index = ingredientsOnPlate.Count;
         //Vector3 positionOffset = new Vector3(0, index * spacing, 0);
         //Vector3 positionOffset = plateSpawnPoint.position;
-        Vector3 positionOffset = new Vector3(0f, 1.5f, 0f);
+        Vector3 positionOffset = new Vector3(0f, 1.0f, 0f);
         Rigidbody rb = ingredient.GetComponent<Rigidbody>();
 
         // Configurar el ingrediente como hijo del plato

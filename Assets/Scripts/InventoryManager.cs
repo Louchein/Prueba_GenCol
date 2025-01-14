@@ -123,8 +123,10 @@ public class InventoryManager : MonoBehaviour {
             GameObject item2 = urnAnchor2.GetChild(0).gameObject;
 
             if (AreCombinable(item1, item2, out ItemSO combinedResult)) {
+                AudioManager.Instance.PlaySFX("combine");
                 CombineItems(item1, item2, combinedResult);
             } else {
+                AudioManager.Instance.PlaySFX("wrong");
                 EjectItem(item1);
                 EjectItem(item2);
             }

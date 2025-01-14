@@ -18,11 +18,13 @@ public class InteractableController : MonoBehaviour {
         if (gameObject.CompareTag(EnterInventoryTag)) {
             Debug.Log($"Item {itemController.item.itemName} dropped on the urn {gameObject.name}.");
             InventoryManager.Instance.DropItemInUrn(item); // Lógica de la urna
+            AudioManager.Instance.PlaySFX("blob");
             return true;
         }
         // Caso: Basura
         else if (gameObject.CompareTag(TrashCanTag)) {
             Debug.Log($"Item {itemController.item.itemName} dropped on the trash can {gameObject.name}.");
+            AudioManager.Instance.PlaySFX("trashcan");
             Destroy(item); // Destruir el objeto
             return true;
         }
