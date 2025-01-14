@@ -15,5 +15,6 @@ MonoBehaviour:
   id: 6
   itemName: Pan con Ventosas
   value: 0
-  icon: {fileID: 21300000, guid: 0735517783638fa489fc182b0150aeab, type: 3}
-  prefab: {fileID: 9011400692662756937, guid: fff25f13d8b01bd42aeca14026d90ca2, type: 3}
+  icon: {fileID: 21300000, guid: 8366ea69c26e5c646a8dcf986457a9d1, type: 3}
+  prefab: {fileID: 9011400692662756937, guid: 5a506377f3153a54d946630cffd68c33, type: 3}
+  itemType: Pan

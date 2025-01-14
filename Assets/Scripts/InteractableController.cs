@@ -29,9 +29,21 @@ public class InteractableController : MonoBehaviour {
         // Caso: Plato
         else if (gameObject.CompareTag(PlateTag)) {
             Debug.Log($"Item {itemController.item.itemName} dropped on the plate {gameObject.name}.");
-            // Aquí puedes implementar la lógica para manejar los ítems en el plato
-            Destroy(item); // Destruir el objeto después de colocarlo
-            return true;
+
+            PlateController plateController = GetComponent<PlateController>();
+
+            if (plateController != null) {
+                if (!plateController.TryAddIngredient(item)) {
+                    Debug.LogWarning($"Cannot add {itemController.item.itemName} to the plate.");
+                    return false; // El ingrediente no pudo ser agregado
+                }
+
+                Debug.Log($"Ingredient {itemController.item.itemName} added to the plate.");
+                return true;
+            } else {
+                Debug.LogWarning("PlateController not found on this plate.");
+                return false;
+            }
         }
         // Caso: Botón de inventario (No permite dropear objetos)
         else if (gameObject.CompareTag(InventoryBtnTag)) {
