@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Enter_Inventory
+  - Trash_Can
+  - Plate
+  - Inventory_Button
+  - Bell
   layers:
   - Default
   - TransparentFX

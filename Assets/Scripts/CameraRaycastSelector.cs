@@ -21,6 +21,18 @@ public class CameraRaycastSelector : MonoBehaviour {
         // Perform the raycast
         if (Physics.Raycast(ray, out hit, rayDistance, interactableLayer)) {
             HandleSelection(hit);
+
+            // Handle item interaction when clicking on an interactable
+            if (Input.GetMouseButtonDown(0)) {
+                GameObject hitObject = hit.collider.gameObject;
+
+                // Check for inventory button
+                if (hitObject.CompareTag("Inventory_Button")) {
+                    HandleInventoryButton(); // Handles inventory logic
+                } else {
+                    DropItemOnInteractable(hitObject);
+                }
+            }
         } else {
             ClearSelection();
         }
@@ -52,6 +64,42 @@ public class CameraRaycastSelector : MonoBehaviour {
         if (selectedRenderer != null) {
             selectedRenderer.material.color = originalColor;
             selectedRenderer = null;
+        }
+    }
+
+    private void DropItemOnInteractable(GameObject interactable) {
+        // Check if there is an item at the HandlingPoint
+        Transform handlingPoint = InventoryManager.Instance.HandlingPoint; // Use the HandlingPoint from InventoryManager
+        if (handlingPoint.childCount > 0) {
+            GameObject itemObject = handlingPoint.GetChild(0).gameObject;
+
+            // Check if the interactable has an InteractableController
+            InteractableController interactableController = interactable.GetComponent<InteractableController>();
+            if (interactableController != null) {
+                // Drop the item onto the interactable
+                if (interactableController.HandleItemDrop(itemObject)) {
+                    // Optionally clear the HandlingPoint
+                    //itemObject.transform.SetParent(null);
+                    //Debug.Log($"Cleaned/Dropped {itemObject.name} on {interactable.name}");
+                }
+            } else {
+                Debug.LogWarning("This interactable cannot handle item drops.");
+            }
+        } else {
+            Debug.LogWarning("No item to drop!");
+        }
+    }
+
+    private void HandleInventoryButton() {
+        // Check if there are items in the urn
+        bool urnHasItems = InventoryManager.Instance.urnAnchor1.childCount > 0 || InventoryManager.Instance.urnAnchor2.childCount > 0;
+
+        if (urnHasItems) {
+            // Process the urn's items
+            InventoryManager.Instance.ProcessUrnButton();
+            Debug.Log("Inventory button pressed and items processed.");
+        } else {
+            Debug.LogWarning("Inventory button pressed, but the urn is empty.");
         }
     }
 }
