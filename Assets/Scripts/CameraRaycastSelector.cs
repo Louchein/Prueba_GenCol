@@ -22,10 +22,16 @@ public class CameraRaycastSelector : MonoBehaviour {
         if (Physics.Raycast(ray, out hit, rayDistance, interactableLayer)) {
             HandleSelection(hit);
 
-            // Handle item dropping when clicking on an interactable
+            // Handle item interaction when clicking on an interactable
             if (Input.GetMouseButtonDown(0)) {
-                // Left mouse button
-                DropItemOnInteractable(hit.collider.gameObject);
+                GameObject hitObject = hit.collider.gameObject;
+
+                // Check for inventory button
+                if (hitObject.CompareTag("Inventory_Button")) {
+                    HandleInventoryButton(); // Handles inventory logic
+                } else {
+                    DropItemOnInteractable(hitObject);
+                }
             }
         } else {
             ClearSelection();
@@ -73,14 +79,27 @@ public class CameraRaycastSelector : MonoBehaviour {
                 // Drop the item onto the interactable
                 if (interactableController.HandleItemDrop(itemObject)) {
                     // Optionally clear the HandlingPoint
-                    itemObject.transform.SetParent(null);
-                    Debug.Log($"Cleaned/Dropped {itemObject.name} on {interactable.name}");
+                    //itemObject.transform.SetParent(null);
+                    //Debug.Log($"Cleaned/Dropped {itemObject.name} on {interactable.name}");
                 }
             } else {
                 Debug.LogWarning("This interactable cannot handle item drops.");
             }
         } else {
             Debug.LogWarning("No item to drop!");
+        }
+    }
+
+    private void HandleInventoryButton() {
+        // Check if there are items in the urn
+        bool urnHasItems = InventoryManager.Instance.urnAnchor1.childCount > 0 || InventoryManager.Instance.urnAnchor2.childCount > 0;
+
+        if (urnHasItems) {
+            // Process the urn's items
+            InventoryManager.Instance.ProcessUrnButton();
+            Debug.Log("Inventory button pressed and items processed.");
+        } else {
+            Debug.LogWarning("Inventory button pressed, but the urn is empty.");
         }
     }
 }

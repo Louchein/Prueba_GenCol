@@ -18,9 +18,17 @@ public class ItemPickup : MonoBehaviour {
         // Assign the HandlingPoint from the InventoryManager
         handlingPoint = InventoryManager.Instance.HandlingPoint;
         rb = GetComponent<Rigidbody>();
+        if (rb == null) {
+            Debug.LogError($"Rigidbody not found on {gameObject.name}. Please assign one.");
+        }
     }
 
     void Pickup() {
+        //if (rb == null) {
+        //    Debug.LogWarning("Cannot pick up item without a Rigidbody assigned.");
+        //    return;
+        //}
+
         // Move the object to the HandlingPoint if it's empty
         if (handlingPoint != null && handlingPoint.childCount <= 0) {
             // Store the initial position, rotation, and parent

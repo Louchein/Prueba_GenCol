@@ -15,6 +15,15 @@ public class InventoryManager : MonoBehaviour {
     public Transform spawnPoint; // Punto de generación
     public Transform HandlingPoint; // El punto donde el jugador manipula los objetos
 
+    [Header("Urn Settings")]
+    public Transform urnAnchor1; // Primer anchor point de la urna
+    public Transform urnAnchor2; // Segundo anchor point de la urna
+
+    [Header("Combination Rules")]
+    public List<CombinationRule> combinationRules; // Reglas de combinación entre los ingredientes
+
+    [SerializeField] private float ejectForce = 50f;
+
     private void Awake() {
         Instance = this;
     }
@@ -45,6 +54,136 @@ public class InventoryManager : MonoBehaviour {
             Debug.LogWarning("No item in HandlingPoint.");
         }
     }
+
+    public void DropItemInUrn(GameObject item) {
+        // Liberar el objeto del HandlingPoint, si aplica
+        if (item.transform.parent == HandlingPoint) {
+            item.transform.SetParent(null);
+        }
+
+        if (urnAnchor1.childCount == 0) {
+            AssignToAnchor(item, urnAnchor1);
+            //VerifyItemPlacement(item, urnAnchor1);
+        } else if (urnAnchor2.childCount == 0) {
+            AssignToAnchor(item, urnAnchor2);
+            //VerifyItemPlacement(item, urnAnchor1);
+        } else {
+            Debug.LogWarning("Both anchors are occupied. Cannot drop the item in the urn.");
+        }
+
+        // Liberar el objeto del HandlingPoint
+        if (HandlingPoint.childCount > 0 && HandlingPoint.GetChild(0).gameObject == item) {
+            item.transform.SetParent(null); // Desvincula el objeto del HandlingPoint
+        }
+    }
+
+    /*
+    private void AssignToAnchor(GameObject item, Transform anchor) {
+        item.transform.SetParent(anchor);
+        item.transform.localPosition = Vector3.zero;
+        item.transform.localRotation = Quaternion.identity;
+        Debug.Log($"Item {item.name} assigned to {anchor.name} at position {anchor.position}");
+    }*/
+    private void AssignToAnchor(GameObject item, Transform anchor) {
+        // Asegúrate de desactivar la física
+        Rigidbody rb = item.GetComponent<Rigidbody>();
+        if (rb != null) {
+            rb.isKinematic = true; // Desactiva la física
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
+
+        // Eliminar cualquier padre previo y reasignar al anchor
+        item.transform.SetParent(null); // Elimina cualquier vínculo anterior
+        item.SetActive(false);
+        item.transform.SetParent(anchor); // Reasigna al nuevo padre
+        item.SetActive(true);
+
+        // Forzar posición y rotación locales
+        item.transform.localPosition = Vector3.zero;
+        item.transform.localRotation = Quaternion.identity;
+
+        Debug.Log($"Item {item.name} assigned to {anchor.name}");
+    }
+
+    private void VerifyItemPlacement(GameObject item, Transform anchor) {
+        Debug.Log($"Verifying placement of {item.name} in {anchor.name}");
+        Debug.Log($"Parent: {item.transform.parent?.name}, LocalPosition: {item.transform.localPosition}, LocalRotation: {item.transform.localRotation}");
+    }
+
+    public void ProcessUrnButton() {
+        if (urnAnchor1.childCount == 0 && urnAnchor2.childCount == 0) {
+            Debug.Log("Both anchors are empty. No action performed.");
+        } else if (urnAnchor1.childCount > 0 && urnAnchor2.childCount == 0) {
+            MoveItemToInventory(urnAnchor1.GetChild(0).gameObject);
+        } else if (urnAnchor1.childCount == 0 && urnAnchor2.childCount > 0) {
+            MoveItemToInventory(urnAnchor2.GetChild(0).gameObject);
+        } else if (urnAnchor1.childCount > 0 && urnAnchor2.childCount > 0) {
+            GameObject item1 = urnAnchor1.GetChild(0).gameObject;
+            GameObject item2 = urnAnchor2.GetChild(0).gameObject;
+
+            if (AreCombinable(item1, item2, out ItemSO combinedResult)) {
+                CombineItems(item1, item2, combinedResult);
+            } else {
+                EjectItem(item1);
+                EjectItem(item2);
+            }
+        }
+    }
+
+    private void MoveItemToInventory(GameObject item) {
+        ItemController itemController = item.GetComponent<ItemController>();
+        if (itemController != null) {
+            Add(itemController.item); // Agregar el ítem al inventario
+            Destroy(item); // Eliminar el objeto de la urna
+            Debug.Log($"Item {item.name} moved to inventory.");
+        }
+    }
+
+    private bool AreCombinable(GameObject item1, GameObject item2, out ItemSO combinedResult) {
+        combinedResult = null;
+        ItemController itemController1 = item1.GetComponent<ItemController>();
+        ItemController itemController2 = item2.GetComponent<ItemController>();
+
+        if (itemController1 != null && itemController2 != null) {
+            foreach (var rule in combinationRules) {
+                if ((rule.ingredient1 == itemController1.item && rule.ingredient2 == itemController2.item) ||
+                    (rule.ingredient1 == itemController2.item && rule.ingredient2 == itemController1.item)) {
+                    combinedResult = rule.result;
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private void CombineItems(GameObject item1, GameObject item2, ItemSO combinedResult) {
+        Add(combinedResult);
+        Debug.Log($"Items combined into {combinedResult.itemName}.");
+        Destroy(item1);
+        Destroy(item2);
+    }
+
+    private void EjectItem(GameObject item) {
+        Transform playerTransform = HandlingPoint.parent; // Asume que el jugador es el padre del HandlingPoint
+        Vector3 direction = (playerTransform.position - item.transform.position).normalized; // Dirección hacia el jugador
+        Rigidbody rb = item.GetComponent<Rigidbody>();
+
+        // Dibuja el vector en la escena
+        Debug.DrawRay(item.transform.position, direction * 2f, Color.red, 2f); // Escala el vector para visualizarlo mejor
+        Debug.Log($"Ejecting {item.name} - Direction: {direction}, Player Position: {playerTransform.position}, Item Position: {item.transform.position}");
+
+        if (rb != null) {
+            rb.isKinematic = false;
+            float force = ejectForce; // Ajusta la magnitud de la fuerza
+            rb.AddForce(direction * force, ForceMode.Impulse);
+        }
+
+        item.transform.SetParent(null);
+        Debug.Log($"Item {item.name} ejected towards the player.");
+    }
+
+
 
     public void Add(ItemSO item) {
         // Incrementar el conteo del item o agregarlo al diccionario
@@ -100,4 +239,11 @@ public class InventoryManager : MonoBehaviour {
             itemCounter.text = count.ToString();
         }
     }
+}
+
+[System.Serializable]
+public class CombinationRule {
+    public ItemSO ingredient1;
+    public ItemSO ingredient2;
+    public ItemSO result;
 }

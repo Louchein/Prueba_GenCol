@@ -118,6 +118,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b4176d38403c114ea2ec7c7a25b7a57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  offsetRange: 3
+  divider: 10
 --- !u!1 &3007974213484240336
 GameObject:
   m_ObjectHideFlags: 0
@@ -5011,7 +5013,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Item: {fileID: 11400000, guid: fa6db76e2f00bc84085e6991276e1a37, type: 2}
-  rb: {fileID: 0}
+  rb: {fileID: -1992537410217540412}
 --- !u!136 &-3577789187013862021
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -5043,7 +5045,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4179942173869784758}
   serializedVersion: 4
-  m_Mass: 0.1
+  m_Mass: 0.7
   m_Drag: 0.1
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -5061,7 +5063,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!1 &6950354883856803978
 GameObject:
   m_ObjectHideFlags: 0
@@ -5180,6 +5182,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b4176d38403c114ea2ec7c7a25b7a57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  offsetRange: 3
+  divider: 10
 --- !u!1 &7924776264852211144
 GameObject:
   m_ObjectHideFlags: 0
@@ -5298,6 +5302,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b4176d38403c114ea2ec7c7a25b7a57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  offsetRange: 3
+  divider: 10
 --- !u!1 &8253269516011130033
 GameObject:
   m_ObjectHideFlags: 0
@@ -5416,6 +5422,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b4176d38403c114ea2ec7c7a25b7a57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  offsetRange: 3
+  divider: 10
 --- !u!1 &9131625641858553676
 GameObject:
   m_ObjectHideFlags: 0

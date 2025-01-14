@@ -6,6 +6,7 @@ public class InventoryItemController : MonoBehaviour {
     public ItemSO item; // Objeto de inventario asociado
     public GameObject itemPrefab; // Prefab a instanciar
     private Transform spawnPoint; // Punto donde se generará el objeto
+    [SerializeField] private GameObject foodParentTransform;
 
     private float spawnRotationRange = 15f;
 

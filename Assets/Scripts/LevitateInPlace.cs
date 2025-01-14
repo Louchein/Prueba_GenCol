@@ -6,6 +6,7 @@ public class LevitateInPlace : MonoBehaviour {
     private Vector3 initialPosition;
     private float randomOffset;
     [SerializeField] private float offsetRange = 3f;
+    [SerializeField] private float divider = 10f;
 
     // Start is called before the first frame update
     void Start() {
@@ -16,7 +17,7 @@ public class LevitateInPlace : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         transform.localPosition = new Vector3(initialPosition.x,
-                                         initialPosition.y + Mathf.Sin((offsetRange/1) * Time.time + randomOffset)/50, 
+                                         initialPosition.y + Mathf.Sin((offsetRange/1) * Time.time + randomOffset)/divider, 
                                          initialPosition.z);
     }
 }
